@@ -19,24 +19,26 @@
 // });
 
 const bodyEl = document.querySelector('body');
-const startEl = document.querySelector('button[data-start]');
-const stopEl = document.querySelector('button[data-stop]');
+const startBtn = document.querySelector('button[data-start]');
+const stopBtn = document.querySelector('button[data-stop]');
 function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 }
-startEl.addEventListener('click', addStylesBody);
+startBtn.addEventListener('click', addStylesBody);
+let timerId = null;
 function addStylesBody() {
   timerId = setInterval(() => {
     bodyEl.style.backgroundColor = getRandomHexColor();
   }, 1000);
   if (timerId) {
-    startEl.removeEventListener('click', addStylesBody);
+    //  startEl.disabled = true;
+    startBtn.removeEventListener('click', addStylesBody);
   }
 }
-stopEl.addEventListener('click', () => {
+stopBtn.addEventListener('click', () => {
   clearInterval(timerId);
-  startEl.addEventListener('click', addStylesBody);
+  startBtn.addEventListener('click', addStylesBody);
+  //  startEl.disabled = false;
 });
-
 
 
