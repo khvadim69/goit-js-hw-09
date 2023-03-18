@@ -31,14 +31,14 @@ function addStylesBody() {
     bodyEl.style.backgroundColor = getRandomHexColor();
   }, 1000);
   if (timerId) {
-    //  startEl.disabled = true;
+    startBtn.disabled = true;
     startBtn.removeEventListener('click', addStylesBody);
   }
 }
 stopBtn.addEventListener('click', () => {
   clearInterval(timerId);
   startBtn.addEventListener('click', addStylesBody);
-  //  startEl.disabled = false;
+  startBtn.disabled = false;
 });
 
 
