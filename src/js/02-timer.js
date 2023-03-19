@@ -16,7 +16,7 @@ startEl.disabled = true;
 let selectDate = null;
 flatpickr(
   datetimeEl,
-  (options = {
+  (timer = {
     isActiv: false,
     interval: null,
     enableTime: true,
@@ -58,7 +58,7 @@ flatpickr(
   })
 );
 startEl.addEventListener('click', () => {
-  options.start();
+  timer.start();
 });
 function pad(value) {
   return String(value).padStart(2, '0');
