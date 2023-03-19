@@ -45,7 +45,7 @@ flatpickr(
         defference = selectDate - new Date();
         if (defference < 0) {
           return clearInterval(this.interval);
-         }
+        }
         this.isActiv = true;
         const components = convertMs(defference);
         console.log(components);
