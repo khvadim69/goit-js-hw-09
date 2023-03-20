@@ -12,18 +12,21 @@ let selectDate = null;
 const options = {
   isActiv: false,
   interval: null,
+  // selectDate: null,
   enableTime: true,
   time_24hr: true,
-  defaultDate: new Date(),
+  defaultDate: Date.now(),
   minuteIncrement: 1,
-  onClose(selectedDates) {
-    if (selectedDates[0] <= new Date()) {
+  onClose([selectedDates]) {
+    if (selectedDates <= Date.now()) {
       Notiflix.Report.info('Please choose a date in the future');
       startEl.disabled = true;
-      selectDate = null;
+      // selectDate = null;
+      this.selectDate = null;
     } else {
       startEl.disabled = false;
-      selectDate = selectedDates[0];
+      selectDate = selectedDates;
+      // this.selectDate = selectedDates;
       console.log(selectDate);
       return;
     }
@@ -34,17 +37,17 @@ const options = {
     }
     let delta = 0;
     this.interval = setInterval(() => {
-      delta = selectDate - new Date();
+      delta = selectDate - Date.now();
+      // delta = this.selectDate - Date.now();
       if (delta < 0) {
         return clearInterval(this.interval);
       }
       this.isActiv = true;
       const components = convertMs(delta);
-      console.log(components);
-      daysEl.textContent = components.days;
-      hoursEl.textContent = components.hours;
-      minutesEl.textContent = components.minutes;
-      secondsEl.textContent = components.seconds;
+      daysEl.textContent = addLeadingZero(components.days);
+      hoursEl.textContent = addLeadingZero(components.hours);
+      minutesEl.textContent = addLeadingZero(components.minutes);
+      secondsEl.textContent = addLeadingZero(components.seconds);
     }, 1000);
   },
 };
@@ -60,11 +63,9 @@ function convertMs(ms) {
   const minute = second * 60;
   const hour = minute * 60;
   const day = hour * 24;
-  const days = addLeadingZero(Math.floor(ms / day));
-  const hours = addLeadingZero(Math.floor((ms % day) / hour));
-  const minutes = addLeadingZero(Math.floor(((ms % day) % hour) / minute));
-  const seconds = addLeadingZero(
-    Math.floor((((ms % day) % hour) % minute) / second)
-  );
+  const days = Math.floor(ms / day);
+  const hours = Math.floor((ms % day) / hour);
+  const minutes = Math.floor(((ms % day) % hour) / minute);
+  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
   return { days, hours, minutes, seconds };
 }
