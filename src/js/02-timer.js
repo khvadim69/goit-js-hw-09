@@ -13,6 +13,7 @@ const options = {
   isActiv: false,
   interval: null,
   // selectDate: null,
+  delta: 0,
   enableTime: true,
   time_24hr: true,
   defaultDate: Date.now(),
@@ -35,20 +36,24 @@ const options = {
     if (this.isActiv) {
       return;
     }
-    let delta = 0;
+    this.delta = 0;
     this.interval = setInterval(() => {
-      delta = selectDate - Date.now();
+      this.delta = selectDate - Date.now();
       // delta = this.selectDate - Date.now();
-      if (delta < 0) {
+      if (this.delta < 0) {
         return clearInterval(this.interval);
       }
       this.isActiv = true;
-      const components = convertMs(delta);
-      daysEl.textContent = addLeadingZero(components.days);
-      hoursEl.textContent = addLeadingZero(components.hours);
-      minutesEl.textContent = addLeadingZero(components.minutes);
-      secondsEl.textContent = addLeadingZero(components.seconds);
+      options.addDom();
     }, 1000);
+  },
+  addDom() {
+    const components = convertMs(this.delta);
+    console.log(components);
+    daysEl.textContent = addLeadingZero(components.days);
+    hoursEl.textContent = addLeadingZero(components.hours);
+    minutesEl.textContent = addLeadingZero(components.minutes);
+    secondsEl.textContent = addLeadingZero(components.seconds);
   },
 };
 flatpickr(datetimeEl, options);
