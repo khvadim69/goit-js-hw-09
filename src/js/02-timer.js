@@ -22,13 +22,12 @@ const options = {
     if (selectedDates <= Date.now()) {
       Notiflix.Report.info('Please choose a date in the future');
       startEl.disabled = true;
-      // selectDate = null;
-      this.selectDate = null;
+      selectDate = null;
+      // this.selectDate = null;
     } else {
       startEl.disabled = false;
       selectDate = selectedDates;
       // this.selectDate = selectedDates;
-      console.log(selectDate);
       return;
     }
   },
@@ -36,10 +35,9 @@ const options = {
     if (this.isActiv) {
       return;
     }
-    this.delta = 0;
-    this.interval = setInterval(() => {
+     this.interval = setInterval(() => {
       this.delta = selectDate - Date.now();
-      // delta = this.selectDate - Date.now();
+      // this.delta = this.selectDate - Date.now();
       if (this.delta < 0) {
         return clearInterval(this.interval);
       }
